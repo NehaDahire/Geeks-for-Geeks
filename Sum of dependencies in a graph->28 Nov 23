@@ -1,0 +1,15 @@
+Sum of dependencies in a graph->problem of the day->27 November 2023
+Code:
+class Solution {
+  public:
+    int sumOfDependencies(vector<int> adj[], int V) {
+        // code here
+        int sum=0;
+        for(int i=0;i<V;i++){
+            for(auto v:adj[i]){
+                sum++;
+            }
+        }
+        return sum;
+    }
+};
