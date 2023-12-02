@@ -1,0 +1,46 @@
+Given a Binary Search Tree that contains unique positive integer values greater than 0. The task is to complete the function isDeadEnd which returns true if the BST contains a dead end else returns false. Here Dead End means a leaf node, at which no other node can be inserted
+CODE:
+/*The Node structure is
+struct Node {
+int data;
+Node * right, * left;
+};*/
+
+/*You are required to complete below method */
+void store_nodes(Node *root,unordered_set<int> &all,unordered_set<int> &leaf){
+    if(root==NULL){
+        return ;
+    }
+    all.insert(root->data);
+    if(root->right==NULL && root->left==NULL){
+        leaf.insert(root->data);
+        return;
+    }
+    store_nodes(root->left,all,leaf);
+    store_nodes(root->right,all,leaf);
+    return;
+}
+class Solution{
+  public:
+    bool isDeadEnd(Node *root)
+    {
+        //Your code here
+        if(root==NULL){
+            return false;
+        }
+        unordered_set<int> all;
+        unordered_set<int> leaf;
+        
+        all.insert(0);//to handle if bst contains 1
+        
+        store_nodes(root,all,leaf);
+        
+        for(auto it=leaf.begin();it!=leaf.end();it++){
+            if(all.find((*it)+1)!=all.end() && all.find((*it)-1)!=all.end()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+};
