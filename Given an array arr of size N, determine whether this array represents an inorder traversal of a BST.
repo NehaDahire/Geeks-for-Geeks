@@ -1,0 +1,5 @@
+Given an array arr of size N, determine whether this array represents an inorder traversal of a BST. 
+
+Note: All keys in BST must be unique.
+CODE:
+If the given array is sorted then it is a inorder traversal of a BST
