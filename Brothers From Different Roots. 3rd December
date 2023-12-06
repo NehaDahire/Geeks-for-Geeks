@@ -1,0 +1,42 @@
+problem of the day 3rd december
+Given two BSTs containing N1 and N2 distinct nodes respectively and given a value x, your task is to complete the function countPairs(),
+that returns the count of all pairs of (a, b), where a belongs to one BST and b belongs to another BST, such that a + b = x.
+
+CODE:
+void inorder(unordered_set<int>& set,int&count,Node* root,int x, bool flag){
+    if(root==NULL){
+        return;
+    }
+    if(flag==true){
+        //for hash 1
+        //elements in root1 are a and a is small than x
+        //inorder traversal left node right
+        inorder(set,count,root->left,x,true);
+        if(root->data < x){
+            set.insert(root->data);//a is less than x
+        }
+        inorder(set,count,root->right,x,true);
+    }
+    else{
+        //a+b=x;
+        //a=x-b;
+        //root2 elements are b
+        inorder(set,count,root->left,x,false);
+        if(set.find(x-root->data)!=set.end()){
+            count++;
+        }
+        inorder(set,count,root->right,x,false);
+    }
+}
+class Solution
+{
+public:
+    int countPairs(Node* root1, Node* root2, int x)
+    {
+       unordered_set<int> set;
+       int count=0;
+       inorder(set,count,root1,x,true);
+       inorder(set,count,root2,x,false);
+       return count;
+    }
+};
