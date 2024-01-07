@@ -1,0 +1,39 @@
+Given an array arr[] of N elements and a number K., split the given array into K subarrays such that the maximum subarray sum achievable out of K subarrays formed is minimum possible. Find that possible subarray sum.
+CODE:
+class Solution {
+  public:
+   bool check(int mid,int a[],int K,int N){
+       int total=1,sum=0;
+       for(int i=0;i<N;i++){
+            sum+=a[i];
+            if(sum>mid){
+                total++;
+                sum=a[i];
+            }
+        }
+        return total<=K;
+   }
+    int splitArray(int arr[] ,int N, int K) {
+        // code here
+        int low=0,high=0;
+        
+        for(int i=0;i<N;i++){
+            high+=arr[i];
+            low=max(low,arr[i]);
+        }
+        int ans=0;
+        while(low<=high){
+            int mid = (low+high)/2;
+            //bool check=false;
+            if(check(mid,arr,K,N)){
+                // sum is greater than mid in K parts is possible
+                ans=mid;
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        return ans;
+    }
+};
